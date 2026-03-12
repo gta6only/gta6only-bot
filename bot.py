@@ -10,7 +10,7 @@ TWITTER_BEARER_TOKEN = os.getenv("TWITTER_BEARER_TOKEN")
 CHANNEL_TWITTER_ID = int(os.getenv("CHANNEL_TWITTER_ID","0"))
 CHANNEL_INSTAGRAM_ID = int(os.getenv("CHANNEL_INSTAGRAM_ID","0"))
 TWITTER_ACCOUNTS = ["RockstarGames","GTAVI","RockstarSupport"]
-INSTAGRAM_ACCOUNTS = ["rockstargames"]
+INSTAGRAM_ACCOUNTS = ["rockstargames", "gtacommunity", "gtaleaks", "gta6only.game", "gta6france_officiel"]
 intents = discord.Intents.default()
 intents.message_content = True
 bot = commands.Bot(command_prefix="!", intents=intents)
@@ -86,7 +86,7 @@ async def check_twitter():
                     for k in t.get("attachments",{}).get("media_keys",[]):
                         m=medias.get(k)
                         if m:img=m.get("url") or m.get("preview_image_url");break
-                    await ch.send(embed=tweet_embed(t,u,img));await asyncio.sleep(1)
+                    await ch.send("@everyone 🚨 Nouvelle news GTA6 !",embed=tweet_embed(t,u,img));await asyncio.sleep(1)
             except Exception as e:print(f"[TW]{u}:{e}")
     save_seen()
 
@@ -99,7 +99,7 @@ async def check_instagram():
             try:
                 for p in reversed(await fetch_ig(s,u)):
                     if p["id"] in seen_instagram:continue
-                    seen_instagram.add(p["id"]);await ch.send(embed=ig_embed(p));await asyncio.sleep(1)
+                    seen_instagram.add(p["id"]);await ch.send("@everyone 🚨 Nouvelle news GTA6 !",embed=ig_embed(p));await asyncio.sleep(1)
             except Exception as e:print(f"[IG]{u}:{e}")
     save_seen()
 
